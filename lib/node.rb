@@ -9,7 +9,15 @@ class Node
     @right = right
   end
 
+  def append(value)
+    node = Node.new(value)
+
+    @data < value ? @right = node : @left = node
+  end
+
   def <=>(other)
-    data <=> other.data
+    return data <=> other.data if other.is_a? Node
+
+    data <=> other
   end
 end

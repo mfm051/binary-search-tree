@@ -18,6 +18,22 @@ class Tree
     )
   end
 
+  def insert(value, parent = @root)
+    return nil if parent == value
+
+    child = parent < value ? parent.right : parent.left
+
+    return insert(value, child) unless child.nil?
+
+    parent.append(value)
+
+    to_s
+  end
+
+  def to_s = pretty_print
+
+  private
+
   # courtesy of a fellow student
   def pretty_print(node = @root, prefix = '', is_left: true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", is_left: false) if node.right
