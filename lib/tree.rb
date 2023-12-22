@@ -87,6 +87,29 @@ class Tree
     elements unless elements.empty?
   end
 
+  def inorder(node = @root, visited = [], &block)
+    return if node.nil?
+
+    inorder(node.left, visited, &block)
+
+    block_given? ? yield(node) : visited << node.data
+
+    inorder(node.right, visited, &block)
+
+    visited unless visited.empty?
+  end
+
+  def postorder(node = @root, visited = [], &block)
+    return if node.nil?
+
+    postorder(node.left, visited, &block)
+    postorder(node.right, visited, &block)
+
+    block_given? ? yield(node) : visited << node.data
+
+    visited unless visited.empty?
+  end
+
   def to_s
     return '' if @root.nil?
 
