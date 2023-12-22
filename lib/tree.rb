@@ -46,6 +46,20 @@ class Tree
     nil
   end
 
+  def find(value)
+    current = @root
+
+    until current.nil?
+      return current if current == value
+
+      next_node = current < value ? current.right : current.left
+
+      current = next_node
+    end
+
+    nil
+  end
+
   def level_order(queue = [@root].compact)
     result = []
 
@@ -62,18 +76,15 @@ class Tree
     result unless block_given?
   end
 
-  def find(value)
-    current = @root
+  def preorder(node = @root, elements = [], &block)
+    return if node.nil?
 
-    until current.nil?
-      return current if current == value
+    block_given? ? yield(node) : elements << node.data
 
-      next_node = current < value ? current.right : current.left
+    preorder(node.left, elements, &block)
+    preorder(node.right, elements, &block)
 
-      current = next_node
-    end
-
-    nil
+    elements unless elements.empty?
   end
 
   def to_s
