@@ -46,6 +46,20 @@ class Tree
     nil
   end
 
+  def find(value)
+    current = @root
+
+    until current.nil?
+      return current if current == value
+
+      next_node = current < value ? current.right : current.left
+
+      current = next_node
+    end
+
+    nil
+  end
+
   def to_s
     return '' if @root.nil?
 
