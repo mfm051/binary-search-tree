@@ -46,6 +46,22 @@ class Tree
     nil
   end
 
+  def level_order(queue = [@root].compact)
+    result = []
+
+    until queue.empty?
+      current_node = queue.shift
+
+      current_node.children.each { |child| queue << child }
+
+      next yield current_node if block_given?
+
+      result << current_node.data
+    end
+
+    result unless block_given?
+  end
+
   def find(value)
     current = @root
 

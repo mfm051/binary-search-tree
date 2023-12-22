@@ -23,6 +23,8 @@ class Node
     value
   end
 
+  def children = [@left, @right].compact
+
   def <=>(other)
     return data <=> other.data if other.is_a? Node
 
