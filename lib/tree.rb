@@ -30,7 +30,27 @@ class Tree
     to_s
   end
 
-  def to_s = pretty_print
+  def delete(value)
+    return @root = nil if @root == value
+
+    parent = @root
+
+    until parent.nil?
+      child = parent < value ? parent.right : parent.left
+
+      return parent.unlink(value) if child == value
+
+      parent = child
+    end
+
+    nil
+  end
+
+  def to_s
+    return '' if @root.nil?
+
+    pretty_print
+  end
 
   private
 

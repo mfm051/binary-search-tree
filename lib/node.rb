@@ -15,6 +15,14 @@ class Node
     @data < value ? @right = node : @left = node
   end
 
+  def unlink(value)
+    @right = nil if @right == value
+
+    @left = nil if @left == value
+
+    value
+  end
+
   def <=>(other)
     return data <=> other.data if other.is_a? Node
 
