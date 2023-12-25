@@ -110,6 +110,20 @@ class Tree
     visited unless visited.empty?
   end
 
+  def height(value, current_node = find(value))
+    return nil if current_node.nil?
+
+    height = 0
+
+    until current_node.children.empty?
+      current_node = current_node.children.max { |child| child.children.size }
+
+      height += 1
+    end
+
+    height
+  end
+
   def to_s
     return '' if @root.nil?
 
