@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Helper method to divide array in center value and its sides
 class Array
   def parts
     middle_index = (size - 1) / 2

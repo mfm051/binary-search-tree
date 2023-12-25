@@ -1,6 +1,9 @@
+# frozen_string_literal: true
+
 require_relative 'node'
 require_relative 'parts'
 
+# :nodoc:
 class Tree
   def initialize(array)
     @root = build_tree(array.uniq.sort)
