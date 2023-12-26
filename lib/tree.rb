@@ -135,6 +135,18 @@ class Tree
 
   private
 
+  def compare_until_leaf(value, current_node = @root, &block)
+    return nil if @root.nil?
+
+    yield(current_node) if block_given?
+
+    child = current_node < value ? current_node.right : current_node.left
+
+    return current_node if child.nil?
+
+    compare_until_leaf(value, child, &block)
+  end
+
   # courtesy of a fellow student
   def pretty_print(node = @root, prefix = '', is_left: true)
     pretty_print(node.right, "#{prefix}#{is_left ? '│   ' : '    '}", is_left: false) if node.right
