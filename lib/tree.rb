@@ -21,16 +21,10 @@ class Tree
     )
   end
 
-  def insert(value, parent = @root)
-    return nil if parent == value
+  def insert(value)
+    parent = compare_until_leaf(value) { |node| return nil if node == value }
 
-    child = parent < value ? parent.right : parent.left
-
-    return insert(value, child) unless child.nil?
-
-    parent.append(value)
-
-    to_s
+    parent&.append(value) && to_s
   end
 
   def delete(value)
