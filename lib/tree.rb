@@ -44,15 +44,7 @@ class Tree
   end
 
   def find(value)
-    current = @root
-
-    until current.nil?
-      return current if current == value
-
-      next_node = current < value ? current.right : current.left
-
-      current = next_node
-    end
+    compare_until_leaf(value) { |node| return node if node == value }
 
     nil
   end
