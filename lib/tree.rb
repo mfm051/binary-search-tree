@@ -6,18 +6,20 @@ require_relative 'parts'
 # :nodoc:
 class Tree
   def initialize(array)
-    @root = build_tree(array.uniq.sort)
+    @root = build_tree(array)
   end
 
   def build_tree(array)
     return nil if array.empty?
 
-    parts = array.parts
+    corrected_array = array.uniq.sort
+
+    array_parts = corrected_array.parts
 
     Node.new(
-      parts[:center_value],
-      left: build_tree(parts[:left_side]),
-      right: build_tree(parts[:right_side])
+      array_parts[:center_value],
+      left: build_tree(array_parts[:left_side]),
+      right: build_tree(array_parts[:right_side])
     )
   end
 
