@@ -131,4 +131,22 @@ describe Tree do
       end
     end
   end
+
+  describe '#height' do
+    subject(:tree_many_letters) { described_class.new(%w[a b c d e]) }
+
+    context 'when node is present' do
+      it 'returns height from that node' do
+        height = tree_many_letters.height('c')
+        expect(height).to eq(2)
+      end
+    end
+
+    context 'when node is not present' do
+      it 'returns nil' do
+        invalid_height = tree_many_letters.height('f')
+        expect(invalid_height).to be_nil
+      end
+    end
+  end
 end
