@@ -22,10 +22,36 @@ describe Tree do
     end
 
     context 'when array is not sorted and has duplicates' do
-      it 'returns a balanced binary tree after sorting array and removing its duplicates' do
+      it 'returns a balanced binary tree with corrected array' do
         messy_data = [2,3,1,1]
         messy_data_tree = tree.build_tree(messy_data)
         expect(messy_data_tree).to be_a_tree
+      end
+    end
+  end
+
+  describe '#insert' do
+    pending
+  end
+
+  describe '#delete' do
+    pending
+  end
+
+  describe '#find' do
+    subject(:tree_with_1) { described_class.new([1]) }
+
+    context 'when value is present' do
+      it 'returns node' do
+        node_1 = tree_with_1.find(1)
+        expect(node_1).to be_a(Node)
+      end
+    end
+
+    context 'when value is not present' do
+      it 'returns nil' do
+        node_2 = tree_with_1.find(2)
+        expect(node_2).to be_nil
       end
     end
   end
