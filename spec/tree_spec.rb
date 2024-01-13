@@ -74,4 +74,61 @@ describe Tree do
       end
     end
   end
+
+  describe '#inorder' do
+    subject(:tree_many_letters) { described_class.new(%w[a b c d e]) }
+
+    context 'without block' do
+      it 'returns array with tree values inorder' do
+        values = tree_many_letters.inorder
+        expect(values).to eq(%w[a b c d e])
+      end
+    end
+
+    context 'with block' do
+      it 'yields each node in level order' do
+        values_upcase = []
+        tree_many_letters.inorder { |node| values_upcase << node.data.upcase }
+        expect(values_upcase).to eq(%w[A B C D E])
+      end
+    end
+  end
+
+  describe '#preorder' do
+    subject(:tree_many_letters) { described_class.new(%w[a b c d e]) }
+
+    context 'without block' do
+      it 'returns array with tree values preorder' do
+        values = tree_many_letters.preorder
+        expect(values).to eq(%w[c a b d e])
+      end
+    end
+
+    context 'with block' do
+      it 'yields each node in level order' do
+        values_upcase = []
+        tree_many_letters.preorder { |node| values_upcase << node.data.upcase }
+        expect(values_upcase).to eq(%w[C A B D E])
+      end
+    end
+  end
+
+  describe '#postorder' do
+    subject(:tree_many_letters) { described_class.new(%w[a b c d e]) }
+
+    context 'without block' do
+      it 'returns array with tree values preorder' do
+        values = tree_many_letters.postorder
+        expect(values).to eq(%w[b a e d c])
+      end
+    end
+
+    context 'with block' do
+      it 'yields each node in level order' do
+        values_upcase = []
+        tree_many_letters.postorder { |node| values_upcase << node.data.upcase }
+        expect(values_upcase).to eq(%w[B A E D C])
+      end
+    end
+  end
 end
