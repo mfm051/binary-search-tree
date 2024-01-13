@@ -55,4 +55,23 @@ describe Tree do
       end
     end
   end
+
+  describe '#level_order' do
+    subject(:tree_letters) { described_class.new(['a','b','c']) }
+
+    context 'without block' do
+      it 'returns array with tree values in level order' do
+        values = tree_letters.level_order
+        expect(values).to eq(['b','a','c'])
+      end
+    end
+
+    context 'with block' do
+      it 'yields each node in level order' do
+        values_upcase = []
+        tree_letters.level_order { |node| values_upcase << node.data.upcase }
+        expect(values_upcase).to eq(['B','A','C'])
+      end
+    end
+  end
 end
