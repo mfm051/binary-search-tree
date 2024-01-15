@@ -187,4 +187,14 @@ describe Tree do
       end
     end
   end
+
+  describe '#rebalance' do
+    subject(:unbalanced_tree) { described_class.new([1, 2, 3, 4]) }
+
+    before { unbalanced_tree.insert(5) }
+
+    it 'rebalances tree' do
+      expect { unbalanced_tree.rebalance }.to change { unbalanced_tree.balanced? }.from(false).to true
+    end
+  end
 end

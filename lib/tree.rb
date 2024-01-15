@@ -137,6 +137,14 @@ class Tree
     true
   end
 
+  def rebalance
+    tree_elements = []
+
+    inorder { |node| tree_elements << node.data }
+
+    @root = build_tree(tree_elements)
+  end
+
   def to_s
     return '' if @root.nil?
 
