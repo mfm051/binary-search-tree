@@ -138,11 +138,7 @@ class Tree
   end
 
   def rebalance
-    tree_elements = []
-
-    inorder { |node| tree_elements << node.data }
-
-    @root = build_tree(tree_elements)
+    @root = build_tree(inorder)
   end
 
   def to_s
