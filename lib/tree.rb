@@ -115,6 +115,18 @@ class Tree
     height
   end
 
+  def depth(value)
+    depth = 0
+
+    compare_until_leaf(value) do |node|
+      depth += 1 unless @root == node
+
+      return depth if node == value
+    end
+
+    nil
+  end
+
   def to_s
     return '' if @root.nil?
 

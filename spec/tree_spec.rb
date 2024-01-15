@@ -4,10 +4,10 @@ require_relative '../lib/tree'
 require_relative '../lib/node'
 
 describe Tree do
-  subject(:tree) { described_class.new([1,2,3]) }
+  subject(:tree) { described_class.new([1, 2, 3]) }
 
   matcher :be_a_tree do
-    correct_order = lambda { |node| (node.left.nil? || node.left < node) && (node.right.nil? || node < node.right) }
+    correct_order = ->(node) { (node.left.nil? || node.left < node) && (node.right.nil? || node < node.right) }
 
     match { |root| correct_order.call(root) && correct_order.call(root.left) && correct_order.call(root.right) }
   end
@@ -15,7 +15,7 @@ describe Tree do
   describe '#build_tree' do
     context 'when array is sorted and has no duplicates' do
       it 'returns a balanced binary tree' do
-        data = [1,2,3]
+        data = [1, 2, 3]
         data_tree = tree.build_tree(data)
         expect(data_tree).to be_a_tree
       end
@@ -23,7 +23,7 @@ describe Tree do
 
     context 'when array is not sorted and has duplicates' do
       it 'returns a balanced binary tree with corrected array' do
-        messy_data = [2,3,1,1]
+        messy_data = [2, 3, 1, 1]
         messy_data_tree = tree.build_tree(messy_data)
         expect(messy_data_tree).to be_a_tree
       end
@@ -57,12 +57,12 @@ describe Tree do
   end
 
   describe '#level_order' do
-    subject(:tree_letters) { described_class.new(['a','b','c']) }
+    subject(:tree_letters) { described_class.new(%w[a b c]) }
 
     context 'without block' do
       it 'returns array with tree values in level order' do
         values = tree_letters.level_order
-        expect(values).to eq(['b','a','c'])
+        expect(values).to eq(%w[b a c])
       end
     end
 
@@ -70,7 +70,7 @@ describe Tree do
       it 'yields each node in level order' do
         values_upcase = []
         tree_letters.level_order { |node| values_upcase << node.data.upcase }
-        expect(values_upcase).to eq(['B','A','C'])
+        expect(values_upcase).to eq(%w[B A C])
       end
     end
   end
@@ -146,6 +146,24 @@ describe Tree do
       it 'returns nil' do
         invalid_height = tree_many_letters.height('f')
         expect(invalid_height).to be_nil
+      end
+    end
+  end
+
+  describe '#depth' do
+    subject(:tree_many_letters) { described_class.new(%w[a b c d e]) }
+
+    context 'when node is present' do
+      it 'returns depth from that node' do
+        depth = tree_many_letters.depth('e')
+        expect(depth).to eq(2)
+      end
+    end
+
+    context 'when node is not present' do
+      it 'returns nil' do
+        invalid_depth = tree_many_letters.depth('f')
+        expect(invalid_depth).to be_nil
       end
     end
   end
