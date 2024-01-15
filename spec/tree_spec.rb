@@ -167,4 +167,24 @@ describe Tree do
       end
     end
   end
+
+  describe '#balanced?' do
+    context 'when tree is balanced' do
+      subject(:balanced_tree) { described_class.new([1, 2, 3, 4]) }
+
+      it 'returns true' do
+        expect(balanced_tree.balanced?).to be true
+      end
+    end
+
+    context 'when tree is not balanced' do
+      subject(:unbalanced_tree) { described_class.new([1, 2, 3, 4]) }
+
+      before { unbalanced_tree.insert(5) }
+
+      it 'returns false' do
+        expect(unbalanced_tree.balanced?).to be false
+      end
+    end
+  end
 end

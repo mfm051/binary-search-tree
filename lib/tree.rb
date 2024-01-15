@@ -127,6 +127,16 @@ class Tree
     nil
   end
 
+  def balanced?
+    preorder do |node|
+      height_subtrees_difference = (height(node.left).to_i - height(node.right).to_i).abs
+
+      return false if height_subtrees_difference > 1
+    end
+
+    true
+  end
+
   def to_s
     return '' if @root.nil?
 
@@ -136,7 +146,7 @@ class Tree
   private
 
   def compare_until_leaf(value, current_node = @root, &block)
-    return nil if @root.nil?
+    return if @root.nil? || value.nil?
 
     yield(current_node) if block_given?
 
