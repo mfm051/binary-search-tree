@@ -1,16 +1,18 @@
 # frozen_string_literal: true
 
-# Helper method to divide array in center value and its sides
+# Helper methods to divide array in center value and its sides
 class Array
-  def parts
-    middle_index = (size - 1) / 2
+  def center_value = slice(middle_index)
 
-    center_value = slice(middle_index)
-
-    left_side = slice(..middle_index - 1).keep_if { |i| i != center_value && i < center_value }
-
-    right_side = slice(middle_index + 1..).keep_if { |i| i != center_value && i > center_value }
-
-    { center_value: center_value, left_side: left_side, right_side: right_side }
+  def left_side
+    slice(..middle_index - 1).keep_if { |i| i != center_value && i < center_value }
   end
+
+  def right_side
+    slice(middle_index + 1..).keep_if { |i| i != center_value && i > center_value }
+  end
+
+  private
+
+  def middle_index = (size - 1) / 2
 end

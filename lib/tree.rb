@@ -10,17 +10,11 @@ class Tree
   end
 
   def build_tree(array)
+    array = array.uniq.sort
+
     return nil if array.empty?
 
-    corrected_array = array.uniq.sort
-
-    array_parts = corrected_array.parts
-
-    Node.new(
-      array_parts[:center_value],
-      left: build_tree(array_parts[:left_side]),
-      right: build_tree(array_parts[:right_side])
-    )
+    Node.new(array.center_value, left: build_tree(array.left_side), right: build_tree(array.right_side))
   end
 
   def insert(value)
