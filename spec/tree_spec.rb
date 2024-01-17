@@ -35,7 +35,17 @@ describe Tree do
   end
 
   describe '#insert' do
-    pending
+    context 'when value is not present in tree' do
+      it 'inserts value to tree as a node' do
+        expect { tree.insert(4) }.to change { tree.inorder }.from([1, 2, 3]).to [1, 2, 3, 4]
+      end
+    end
+
+    context 'when value is already present in tree' do
+      it 'does not modify tree' do
+        expect { tree.insert(3) }.not_to(change { tree.inorder })
+      end
+    end
   end
 
   describe '#delete' do
