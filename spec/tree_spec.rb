@@ -9,22 +9,26 @@ describe Tree do
   matcher :be_a_tree do
     correct_order = ->(node) { (node.left.nil? || node.left < node) && (node.right.nil? || node < node.right) }
 
-    match { |root| correct_order.call(root) && correct_order.call(root.left) && correct_order.call(root.right) }
+    match do |tree|
+      root = tree.instance_variable_get(:@root)
+
+      correct_order.call(root) && correct_order.call(root.left) && correct_order.call(root.right)
+    end
   end
 
-  describe '#build_tree' do
+  describe '#initialize' do
     context 'when array is sorted and has no duplicates' do
-      it 'returns a balanced binary tree' do
+      it 'returns a valid binary tree' do
         data = [1, 2, 3]
-        data_tree = tree.build_tree(data)
+        data_tree = Tree.new(data)
         expect(data_tree).to be_a_tree
       end
     end
 
     context 'when array is not sorted and has duplicates' do
-      it 'returns a balanced binary tree with corrected array' do
+      it 'returns a valid binary tree with corrected array' do
         messy_data = [2, 3, 1, 1]
-        messy_data_tree = tree.build_tree(messy_data)
+        messy_data_tree = Tree.new(messy_data)
         expect(messy_data_tree).to be_a_tree
       end
     end

@@ -9,14 +9,6 @@ class Tree
     @root = build_tree(array)
   end
 
-  def build_tree(array)
-    array = array.uniq.sort
-
-    return nil if array.empty?
-
-    Node.new(array.center_value, left: build_tree(array.left_side), right: build_tree(array.right_side))
-  end
-
   def insert(value)
     parent = compare_until_leaf(value) { |node| return nil if node == value }
 
@@ -142,6 +134,14 @@ class Tree
   end
 
   private
+
+  def build_tree(array)
+    array = array.uniq.sort
+
+    return nil if array.empty?
+
+    Node.new(array.center_value, left: build_tree(array.left_side), right: build_tree(array.right_side))
+  end
 
   def compare_until_leaf(value, current_node = @root, &block)
     return if @root.nil? || value.nil?
