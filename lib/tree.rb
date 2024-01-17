@@ -127,11 +127,7 @@ class Tree
     @root = build_tree(inorder)
   end
 
-  def to_s
-    return '' if @root.nil?
-
-    pretty_print
-  end
+  def to_s = @root.nil? ? '' : pretty_print
 
   private
 
