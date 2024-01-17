@@ -20,7 +20,7 @@ class Tree
   def insert(value)
     parent = compare_until_leaf(value) { |node| return nil if node == value }
 
-    parent&.append(value) && to_s
+    parent&.append(value)
   end
 
   def delete(value)
