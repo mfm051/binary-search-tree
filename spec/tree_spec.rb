@@ -49,7 +49,26 @@ describe Tree do
   end
 
   describe '#delete' do
-    pending
+    context 'when value is not in tree' do
+      subject(:treenotfour) { described_class.new([1, 2, 3]) }
+
+      it 'does not modify tree' do
+        expect { treenotfour.delete(4) }.not_to(change { tree.inorder })
+      end
+    end
+
+    context 'when node is leaf' do
+      it 'removes node from tree' do
+        expect { tree.delete(3) }.to change { tree.inorder }.from([1, 2, 3]).to [1, 2]
+      end
+    end
+
+    context 'when node has one child' do
+      subject(:treeonechild) { described_class.new([1, 2, 3, 4]) }
+      it 'removes node but keeps child' do
+        expect { treeonechild.delete(3) }.to change { treeonechild.inorder }.from([1, 2, 3, 4]).to [1, 2, 4]
+      end
+    end
   end
 
   describe '#find' do
@@ -105,6 +124,17 @@ describe Tree do
         tree_many_letters.inorder { |node| values_upcase << node.data.upcase }
         expect(values_upcase).to eq(%w[A B C D E])
       end
+    end
+  end
+
+  describe '#inorder_successor' do
+    subject(:treedeep) { described_class.new([1, 2, 3, 4, 5, 6]) }
+
+    let(:root) { treedeep.instance_variable_get(:@root) }
+
+    it 'returns inorder successor of a node' do
+      successor = treedeep.inorder_successor(root)
+      expect(successor).to eq(4)
     end
   end
 

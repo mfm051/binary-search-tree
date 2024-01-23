@@ -15,20 +15,24 @@ class Tree
     parent&.append(value)
   end
 
-  def delete(value)
-    return @root = nil if @root == value
+  def delete(value, initial_node: @root)
+    parent, node_to_del = nil
 
-    parent = @root
+    compare_until_leaf(value, initial_node) do |node|
+      next parent = node unless node == value
 
-    until parent.nil?
-      child = parent < value ? parent.right : parent.left
-
-      return parent.unlink(value) if child == value
-
-      parent = child
+      break node_to_del = node
     end
 
-    nil
+    return if node_to_del.nil?
+
+    return parent.unlink(node_to_del) if node_to_del.children.empty?
+
+    successor = inorder_successor(node_to_del)
+
+    node_to_del.switch(successor)
+
+    delete(value, initial_node: node_to_del)
   end
 
   def find(value)
@@ -74,6 +78,18 @@ class Tree
     inorder(node.right, visited, &block)
 
     visited unless visited.empty?
+  end
+
+  def inorder_successor(predecessor_node)
+    previous = nil
+
+    inorder(predecessor_node) do |current_node|
+      return current_node if previous == predecessor_node
+
+      previous = current_node
+    end
+
+    nil
   end
 
   def postorder(node = @root, visited = [], &block)

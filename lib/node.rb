@@ -4,7 +4,8 @@
 class Node
   include Comparable
 
-  attr_reader :data, :left, :right
+  attr_accessor :data
+  attr_reader :left, :right
 
   def initialize(data, left: nil, right: nil)
     @data = data
@@ -27,6 +28,14 @@ class Node
   end
 
   def children = [@left, @right].compact
+
+  def switch(other)
+    other_data = other.data
+    self_data = data
+
+    self.data = other_data
+    other.data = self_data
+  end
 
   def <=>(other)
     return data <=> other.data if other.is_a? Node
