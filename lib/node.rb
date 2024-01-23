@@ -13,10 +13,8 @@ class Node
     @right = right
   end
 
-  def append(value)
-    node = Node.new(value)
-
-    @data < value ? @right = node : @left = node
+  def append(node)
+    self < node ? @right = node : @left = node
   end
 
   def unlink(value)
