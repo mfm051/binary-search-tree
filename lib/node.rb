@@ -15,14 +15,16 @@ class Node
 
   def append(node)
     self < node ? @right = node : @left = node
+
+    self
   end
 
-  def unlink(value)
-    @right = nil if @right == value
+  def unlink(node)
+    @right = nil if @right == node
 
-    @left = nil if @left == value
+    @left = nil if @left == node
 
-    value
+    node
   end
 
   def children = [@left, @right].compact
@@ -33,6 +35,15 @@ class Node
 
     self.data = other_data
     other.data = self_data
+
+    [self, other].each(&:rearrange)
+  end
+
+  def rearrange
+    left = unlink(@left)
+    right = unlink(@right)
+
+    [left, right].each { |node| append(node) unless node.nil? }
   end
 
   def <=>(other)
