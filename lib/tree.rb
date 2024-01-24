@@ -18,7 +18,7 @@ class Tree
   def delete(value, initial_node: @root)
     parent, node_to_del = nil
 
-    compare_until_leaf(value, initial_node) do |node|
+    preorder(initial_node) do |node|
       break node_to_del = node if node == value
 
       if node.children.include?(value)

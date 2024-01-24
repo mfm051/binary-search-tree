@@ -82,9 +82,15 @@ describe Tree do
     context 'when node is root' do
       subject(:treetwochildren) { described_class.new((1..6).to_a) }
 
+      before { treetwochildren.delete(3) }
+
       it 'removes root' do
-        treetwochildren.delete(3)
-        expect(tree.find(3)).to be_nil
+        expect(treetwochildren.find(3)).to be_nil
+      end
+
+      it 'updates root' do
+        new_root = treetwochildren.instance_variable_get(:@root)
+        expect(new_root).not_to be_nil
       end
     end
   end
