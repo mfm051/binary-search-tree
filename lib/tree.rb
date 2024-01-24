@@ -11,7 +11,6 @@ class Tree
 
   def insert(value)
     parent = compare_until_leaf(value) { |node| return nil if node == value }
-
     parent&.append(Node.new(value))
   end
 
@@ -32,22 +31,20 @@ class Tree
     return parent.unlink(node_to_del) if node_to_del.children.empty?
 
     node_to_del.switch(inorder_successor(node_to_del))
-
     delete(value, initial_node: node_to_del)
   end
 
   def find(value)
     compare_until_leaf(value) { |node| return node if node == value }
-
     nil
   end
 
-  def level_order(queue = [@root].compact)
+  def level_order
+    queue = [@root].compact
     result = []
 
     until queue.empty?
       current_node = queue.shift
-
       current_node.children.each { |child| queue << child }
 
       next yield current_node if block_given?
@@ -81,18 +78,6 @@ class Tree
     visited unless visited.empty?
   end
 
-  def inorder_successor(predecessor_node)
-    previous = nil
-
-    inorder(predecessor_node) do |current_node|
-      return current_node if previous == predecessor_node
-
-      previous = current_node
-    end
-
-    nil
-  end
-
   def postorder(node = @root, visited = [], &block)
     return if node.nil?
 
@@ -111,7 +96,6 @@ class Tree
 
     until current_node.children.empty?
       current_node = current_node.children.max { |child| child.children.size }
-
       height += 1
     end
 
@@ -166,6 +150,18 @@ class Tree
     return current_node if child.nil?
 
     compare_until_leaf(value, child, &block)
+  end
+
+  def inorder_successor(predecessor_node)
+    previous = nil
+
+    inorder(predecessor_node) do |current_node|
+      return current_node if previous == predecessor_node
+
+      previous = current_node
+    end
+
+    nil
   end
 
   # courtesy of a fellow student

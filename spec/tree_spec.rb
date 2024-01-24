@@ -96,19 +96,19 @@ describe Tree do
   end
 
   describe '#find' do
-    subject(:tree_with_1) { described_class.new([1]) }
+    subject(:treewith1) { described_class.new([1]) }
 
     context 'when value is present' do
       it 'returns node' do
-        node_1 = tree_with_1.find(1)
-        expect(node_1).to be_a(Node)
+        node1 = treewith1.find(1)
+        expect(node1).to be_a(Node)
       end
     end
 
     context 'when value is not present' do
       it 'returns nil' do
-        node_2 = tree_with_1.find(2)
-        expect(node_2).to be_nil
+        node2 = treewith1.find(2)
+        expect(node2).to be_nil
       end
     end
   end
@@ -148,17 +148,6 @@ describe Tree do
         tree_many_letters.inorder { |node| values_upcase << node.data.upcase }
         expect(values_upcase).to eq(%w[A B C D E])
       end
-    end
-  end
-
-  describe '#inorder_successor' do
-    subject(:treedeep) { described_class.new([1, 2, 3, 4, 5, 6]) }
-
-    let(:root) { treedeep.instance_variable_get(:@root) }
-
-    it 'returns inorder successor of a node' do
-      successor = treedeep.inorder_successor(root)
-      expect(successor).to eq(4)
     end
   end
 
