@@ -65,8 +65,26 @@ describe Tree do
 
     context 'when node has one child' do
       subject(:treeonechild) { described_class.new([1, 2, 3, 4]) }
+
       it 'removes node but keeps child' do
         expect { treeonechild.delete(3) }.to change { treeonechild.inorder }.from([1, 2, 3, 4]).to [1, 2, 4]
+      end
+    end
+
+    context 'when node has two children' do
+      subject(:treetwochildren) { described_class.new((1..6).to_a) }
+
+      it 'keeps both children' do
+        expect { treetwochildren.delete(5) }.to change { treetwochildren.inorder }.from((1..6).to_a).to [1, 2, 3, 4, 6]
+      end
+    end
+
+    context 'when node is root' do
+      subject(:treetwochildren) { described_class.new((1..6).to_a) }
+
+      it 'removes root' do
+        treetwochildren.delete(3)
+        expect(tree.find(3)).to be_nil
       end
     end
   end

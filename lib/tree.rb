@@ -19,18 +19,19 @@ class Tree
     parent, node_to_del = nil
 
     compare_until_leaf(value, initial_node) do |node|
-      next parent = node unless node == value
+      break node_to_del = node if node == value
 
-      break node_to_del = node
+      if node.children.include?(value)
+        parent = node
+        break node_to_del = parent.children.find { |child| child == value }
+      end
     end
 
     return if node_to_del.nil?
 
     return parent.unlink(node_to_del) if node_to_del.children.empty?
 
-    successor = inorder_successor(node_to_del)
-
-    node_to_del.switch(successor)
+    node_to_del.switch(inorder_successor(node_to_del))
 
     delete(value, initial_node: node_to_del)
   end

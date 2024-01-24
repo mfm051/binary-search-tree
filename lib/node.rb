@@ -39,11 +39,23 @@ class Node
     [self, other].each(&:rearrange)
   end
 
-  def rearrange
-    left = unlink(@left)
-    right = unlink(@right)
+  #  def rearrange
+  #    left = unlink(@left)
+  #    right = unlink(@right)
 
-    [left, right].each { |node| append(node) unless node.nil? }
+  #    [left, right].each { |node| append(node) unless node.nil? }
+  #  end
+
+  def rearrange
+    return if @left.nil? || @right.nil?
+
+    left = @left
+    right = @right
+
+    return unless @left > @right
+
+    @left = right
+    @right = left
   end
 
   def <=>(other)
